@@ -5,7 +5,7 @@
 const CONFIG = {
     // ⏱️ Tempo de Delay: Formato "Minutos:Segundos"
     // Exemplo: "48:55", "12:00" ou "00:15"
-    tempoDeDelay: "39:00",
+    tempoDeDelay: "00:00",
 
     // 🔗 Links de Checkout dos Botões
     // O placeholder {subid} será resolvido com o melhor identificador disponível
